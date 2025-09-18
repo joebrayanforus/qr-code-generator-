@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>QR-Code Generator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <!-- Logo -->
+    <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="logo">
+
+    <h1>📱 QR-Code Generator</h1>
+    <form method="POST">
+        <input type="text" name="data" placeholder="Geben Sie eine URL oder einen Text ein" required>
+        <button type="submit">Generieren</button>
+    </form>
+
+    <h2>🖼️ Generierte QR-Codes:</h2>
+    {% for file in qr_files %}
+        <div class="qr-block fade-in">
+            <img src="{{ url_for('static', filename='qr_codes/' + file) }}" alt="{{ file }}">
+            <p>{{ file }}</p>
+            <a href="{{ url_for('static', filename='qr_codes/' + file) }}" download="{{ file }}">📥 Herunterladen</a>
+            <form action="/delete/{{ file }}" method="POST">
+                <button type="submit">🗑️ Löschen</button>
+            </form>
+        </div>
+    {% endfor %}
+
+    <footer>
+        <p class="creator">Erstellt von <strong>Joebrayan Forus</strong> © 2025</p>
+    </footer>
+</body>
+</html>

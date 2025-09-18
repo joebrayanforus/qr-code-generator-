@@ -24,7 +24,8 @@ Ein einfacher und eleganter QR-Code-Generator als Webanwendung – entwickelt mi
 Du kannst hier ein Screenshot-Bild einfügen, z. B. static/screenshot.png:
 
 markdown
-![Screenshot der Anwendung](https://www.bing.com/ck/a?!&&p=a870fd600e3608778b9a8a383d638b0aa1df434e2a2741b5d3622115b51f611dJmltdHM9MTc1ODE1MzYwMA&ptn=3&ver=2&hsh=4&fclid=313f7d7a-29f7-6025-0b1b-6b5e2894612c&u=a1L2ltYWdlcy9zZWFyY2g_cT1xcmNvZGUlMjBpbWFnZSZGT1JNPUlRRlJCQSZpZD05RjI0QTg4Q0Y4Q0E5NjExMUM2NDUyOTg1NTNCRDI0OTNBM0E0MUM1)
+![Screenshot der Anwendung](<img width="408" height="234" alt="image" src="https://github.com/user-attachments/assets/ffd64533-a85a-476e-b906-2f0b2b6d0d2f" />
+)
 🚀 Installation
 bash
 git clone https://github.com/joebrayanforus/qr-code-generator-.git

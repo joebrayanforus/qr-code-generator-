@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Générateur de QR Code</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        form { margin: 20px auto; }
+        input { padding: 10px; width: 300px; }
+        button { padding: 10px 20px; }
+        img { margin: 10px; border: 1px solid #ccc; }
+    </style>
+</head>
+<body>
+    <h1>📱 Générateur de QR Code</h1>
+    <form method="POST">
+        <input type="text" name="data" placeholder="Entrez une URL ou un texte" required>
+        <button type="submit">Générer</button>
+    </form>
+
+    <h2>🖼️ QR Codes enregistrés :</h2>
+    {% for file in qr_files %}
+        <div>
+            <img src="{{ url_for('static', filename='qr_codes/' + file) }}" alt="{{ file }}" width="200">
+            <p>{{ file }}</p>
+        </div>
+    {% endfor %}
+</body>
+</html>
+

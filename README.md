@@ -33,6 +33,8 @@ cd qr-code-generator-
 pip install -r requirements.txt
 python app.py
 Dann öffne http://127.0.0.1:5000 im Browser.
+
+final version:
 https://qr-code-generator-m3dc.onrender.com
 
 📦 Abhängigkeiten

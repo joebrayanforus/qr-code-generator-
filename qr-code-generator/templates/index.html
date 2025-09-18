@@ -2,14 +2,9 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Générateur de QR Code</title>
-    <style>
-        body { font-family: Arial, sans-serif; text-align: center; }
-        form { margin: 20px auto; }
-        input { padding: 10px; width: 300px; }
-        button { padding: 10px 20px; }
-        img { margin: 10px; border: 1px solid #ccc; }
-    </style>
+    <title>QR Code Generator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <h1>📱 Générateur de QR Code</h1>
@@ -18,13 +13,19 @@
         <button type="submit">Générer</button>
     </form>
 
-    <h2>🖼️ QR Codes enregistrés :</h2>
+    <h2>🖼️ QR Codes générés :</h2>
     {% for file in qr_files %}
-        <div>
+        <div class="qr-block">
             <img src="{{ url_for('static', filename='qr_codes/' + file) }}" alt="{{ file }}" width="200">
             <p>{{ file }}</p>
+            <a href="{{ url_for('static', filename='qr_codes/' + file) }}" download="{{ file }}">📥 Télécharger</a>
+            <form action="/delete/{{ file }}" method="POST">
+                <button type="submit">🗑️ Supprimer</button>
+            </form>
         </div>
     {% endfor %}
 </body>
 </html>
+
+
 

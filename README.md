@@ -1,6 +1,7 @@
 # 📱 QR-Code-Generator – Webanwendung mit Flask
 
 ---
+![Screenshot der Anwendung](https://github.com/user-attachments/assets/ffd64533-a85a-476e-b906-2f0b2b6d0d2f)
 
 ## 🧠 **Projektübersicht**
 

@@ -21,4 +21,5 @@ def generate_qr_code(data, filename):
     print(f"✅ QR code généré et enregistré sous : {filename}")
 
 # Exemple d'utilisation
+
 generate_qr_code("https://www.instagram.com", "example.png")

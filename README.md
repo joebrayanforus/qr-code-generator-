@@ -62,7 +62,8 @@ Dann öffne http://127.0.0.1:5000 im Browser.
 
 📸 Screenshot
 html
-<img src="static/screenshot.png" alt="Screenshot der Anwendung" width="800">
+![Screenshot der Anwendung](static/screenshot.png)
+
 (Stelle sicher, dass screenshot.png im Ordner static/ liegt.)
 
 🔄 Funktionen im Detail

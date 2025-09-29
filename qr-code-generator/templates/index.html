@@ -3,36 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <title>QR-Code Generator</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-    <!-- CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-    <!-- Logo -->
-    <img src="{{ url_for('static', filename='logo.png.jpeg') }}" alt="Logo" class="logo">
+<body class="bg-light">
 
-    <h1>📱 QR-Code Generator</h1>
-    <form method="POST">
-        <input type="text" name="data" placeholder="Geben Sie eine URL oder einen Text ein" required>
-        <button type="submit">Generieren</button>
-    </form>
+<div class="container py-5">
+    <div class="card shadow p-4">
+        <h2 class="mb-4 text-center">✨ QR-Code Generator</h2>
+        <form method="POST">
+            <div class="mb-3">
+                <label class="form-label">Text / URL</label>
+                <input type="text" class="form-control" name="data" placeholder="Gib einen Text oder Link ein" required>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Farbe</label>
+                    <input type="color" class="form-control form-control-color" name="color" value="#000000">
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Hintergrundfarbe</label>
+                    <input type="color" class="form-control form-control-color" name="bgcolor" value="#ffffff">
+                </div>
+            </div>
 
-    <h2>🖼️ Generierte QR-Codes:</h2>
-    {% for file in qr_files %}
-        <div class="qr-block fade-in">
-            <img src="{{ url_for('static', filename='qr_codes/' + file) }}" alt="{{ file }}">
-            <p>{{ file }}</p>
-            <a href="{{ url_for('static', filename='qr_codes/' + file) }}" download="{{ file }}">📥 Herunterladen</a>
-            <form action="/delete/{{ file }}" method="POST">
-                <button type="submit">🗑️ Löschen</button>
-            </form>
-        </div>
-    {% endfor %}
+            <div class="mb-3">
+                <label class="form-label">Größe</label>
+                <input type="number" class="form-control" name="size" value="10" min="5" max="30">
+            </div>
 
-    <footer>
-        <p class="creator">Erstellt von <strong>Joebrayan Forus</strong> © 2025</p>
-    </footer>
+            <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" name="with_logo" id="with_logo">
+                <label class="form-check-label" for="with_logo">
+                    Logo einfügen
+                </label>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">QR-Code generieren & herunterladen</button>
+        </form>
+    </div>
+</div>
+
 </body>
 </html>
+
+

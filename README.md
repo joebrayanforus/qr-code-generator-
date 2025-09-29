@@ -1,54 +1,42 @@
-# qr-code-generator-
-qr-code-generator web native
-📱 QR-Code-Generator
+# 📱 QR-Code-Generator – Webanwendung mit Flask
 
-Ein einfacher und eleganter QR-Code-Generator als Webanwendung – entwickelt mit Python, Flask und qrcode. Benutzer können beliebige Texte oder URLs eingeben und sofort einen QR-Code generieren, herunterladen oder löschen.
+---
 
-##🌐 Live-Demo
-👉 Hier ausprobieren Gehostet kostenlos auf Render.
+## 🧠 **Projektübersicht**
 
-##🛠️ Funktionen
-🔤 Eingabe von Text oder URLs
+**Projekttitel**: QR-Code-Generator  
+**Technologien**: Python · Flask · qrcode · HTML/CSS · Render
 
-🖼️ Sofortige QR-Code-Erstellung
+Dieses Projekt demonstriert die Entwicklung einer nativen Webanwendung zur Erstellung von QR-Codes. Ziel ist es, die Fähigkeit zur Umsetzung von Webprojekten mit Python und Flask zu zeigen – inklusive Frontend-Design, Serverlogik, Deployment und Fehlerbehandlung.
 
-📥 Download-Funktion
+---
 
-🗑️ Löschen von QR-Codes
+## 🎯 **Projektziele**
 
-🎨 Modernes Design mit Google Fonts und CSS-Animationen
+1. Entwicklung einer benutzerfreundlichen Weboberfläche zur QR-Code-Erstellung  
+2. Integration von Flask zur Verwaltung von Routen und Formularen  
+3. Nutzung der `qrcode`-Bibliothek zur Generierung von QR-Codes  
+4. Bereitstellung von Funktionen zum Download und Löschen von QR-Codes  
+5. Deployment der Anwendung auf Render mit stabiler Konfiguration
 
-🧑‍💻 Erstellt von Joebrayan Forus
+---
 
-📸 Screenshot
-Du kannst hier ein Screenshot-Bild einfügen, z. B. static/screenshot.png:
+## 🛠️ **Technologien & Tools**
 
+| Technologie     | Zweck                                 |
+|----------------|----------------------------------------|
+| Python & Flask | Backend-Logik und Routing              |
+| qrcode         | QR-Code-Erstellung                     |
+| Pillow         | Bildverarbeitung                       |
+| HTML/CSS       | Benutzeroberfläche und Design          |
+| Gunicorn       | WSGI-Server für Deployment              |
+| Render         | Hosting der Anwendung                  |
 
-![Screenshot der Anwendung](https://github.com/user-attachments/assets/ffd64533-a85a-476e-b906-2f0b2b6d0d2f)
+---
 
-##🚀 Installation
-bash
-git clone https://github.com/joebrayanforus/qr-code-generator-.git
-cd qr-code-generator-
-pip install -r requirements.txt
-python app.py
-Dann öffne http://127.0.0.1:5000 im Browser.
+## 📁 **Projektstruktur**
 
-final version:
-https://qr-code-generator-m3dc.onrender.com
-
-##📦 Abhängigkeiten
-
-Flask
-
-qrcode
-
-Pillow
-
-Gunicorn (für Deployment)
-
-##📁 Projektstruktur
-Code
+```bash
 qr-code-generator/
 ├── app.py
 ├── requirements.txt
@@ -58,5 +46,49 @@ qr-code-generator/
 │   ├── style.css
 │   ├── logo.png
 │   └── qr_codes/
-##📣 Lizenz & Autor
-Dieses Projekt wurde erstellt von Joebrayan Forus im Jahr 2025. Du darfst es gerne verwenden, erweitern oder verbessern – mit Namensnennung.
+
+🚀 Installation & Ausführung
+bash
+git clone https://github.com/joebrayanforus/qr-code-generator-.git
+
+cd qr-code-generator-
+
+pip install -r requirements.txt
+
+python app.py
+Dann öffne http://127.0.0.1:5000 im Browser.
+
+🔗 Live-Version: qr-code-generator-m3dc.onrender.com
+
+📸 Screenshot
+html
+<img src="static/screenshot.png" alt="Screenshot der Anwendung" width="800">
+(Stelle sicher, dass screenshot.png im Ordner static/ liegt.)
+
+🔄 Funktionen im Detail
+🔤 Texteingabe oder URL-Eingabe über Webformular
+
+🖼️ Sofortige QR-Code-Erstellung mit Vorschau
+
+📥 Download als PNG-Datei
+
+🗑️ Löschen generierter QR-Codes
+
+🎨 Modernes Design mit CSS-Animationen und Google Fonts
+
+📱 Responsive für Desktop und Mobile
+
+🧩 Technische Herausforderungen & Lösungen
+Problem	Lösung
+UnicodeDecodeError beim Deployment	Umstellung auf DSN-Verbindung mit UTF-8-Encoding
+Flask-App startet nicht lokal	Einrichtung eines sauberen venv, Anpassung der PowerShell-Richtlinien
+404-Fehler auf Render	Korrektur der render.yaml und Konfiguration des Startbefehls mit Gunicorn
+QR-Code wird nicht angezeigt	Pfadkorrektur und dynamische Dateibenennung im static/qr_codes-Ordner
+📦 Abhängigkeiten
+txt
+Flask  
+qrcode  
+Pillow  
+Gunicorn
+📣 Autor & Lizenz
+Erstellt von Joebrayan Forus, Informatikstudent an der Universität Siegen. Lizenz: MIT – frei zur Nutzung und Erweiterung mit Namensnennung.

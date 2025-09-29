@@ -4,7 +4,7 @@ qr-code-generator web native
 
 Ein einfacher und eleganter QR-Code-Generator als Webanwendung – entwickelt mit Python, Flask und qrcode. Benutzer können beliebige Texte oder URLs eingeben und sofort einen QR-Code generieren, herunterladen oder löschen.
 
-🌐 Live-Demo
+**🌐 Live-Demo**
 👉 Hier ausprobieren Gehostet kostenlos auf Render.
 
 🛠️ Funktionen

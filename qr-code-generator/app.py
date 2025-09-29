@@ -1,42 +1,30 @@
-import os
-import qrcode
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, send_file
+from generate_qr_code import create_qr_code
+import io
 
 app = Flask(__name__)
-qr_folder = os.path.join(app.static_folder, 'qr_codes')
-os.makedirs(qr_folder, exist_ok=True)
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route("/", methods=["GET", "POST"])
 def index():
-    if request.method == 'POST':
-        data = request.form.get('data')
-        if data:
-            filename = f"{data.replace('https://', '').replace('/', '_')}.png"
-            filepath = os.path.join(qr_folder, filename)
-            generate_qr_code(data, filepath)
-            return redirect(url_for('index'))
+    qr_img = None
+    if request.method == "POST":
+        data = request.form.get("data")
+        color = request.form.get("color", "black")
+        bgcolor = request.form.get("bgcolor", "white")
+        size = int(request.form.get("size", 10))
+        with_logo = request.form.get("with_logo") == "on"
 
-    qr_files = [f for f in os.listdir(qr_folder) if f.endswith('.png')]
-    return render_template('index.html', qr_files=qr_files)
+        # QR-Code erzeugen
+        qr_img = create_qr_code(data, color, bgcolor, size, with_logo)
 
-@app.route('/delete/<filename>', methods=['POST'])
-def delete_qr(filename):
-    filepath = os.path.join(qr_folder, filename)
-    if os.path.exists(filepath):
-        os.remove(filepath)
-    return redirect(url_for('index'))
+        # Als Bytes speichern
+        img_bytes = io.BytesIO()
+        qr_img.save(img_bytes, format="PNG")
+        img_bytes.seek(0)
 
-def generate_qr_code(data, filename):
-    qr = qrcode.QRCode(
-        version=1,
-        error_correction=qrcode.constants.ERROR_CORRECT_L,
-        box_size=10,
-        border=4,
-    )
-    qr.add_data(data)
-    qr.make(fit=True)
-    img = qr.make_image(fill_color="black", back_color="white")
-    img.save(filename)
+        return send_file(img_bytes, mimetype="image/png", as_attachment=True, download_name="qr_code.png")
 
-if __name__ == '__main__':
+    return render_template("index.html")
+    
+if __name__ == "__main__":
     app.run(debug=True)

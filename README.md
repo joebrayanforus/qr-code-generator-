@@ -7,7 +7,7 @@ Ein einfacher und eleganter QR-Code-Generator als Webanwendung – entwickelt mi
 **🌐 Live-Demo**
 👉 Hier ausprobieren Gehostet kostenlos auf Render.
 
-🛠️ Funktionen
+**🛠️ Funktionen**
 🔤 Eingabe von Text oder URLs
 
 🖼️ Sofortige QR-Code-Erstellung
@@ -26,7 +26,7 @@ Du kannst hier ein Screenshot-Bild einfügen, z. B. static/screenshot.png:
 
 ![Screenshot der Anwendung](https://github.com/user-attachments/assets/ffd64533-a85a-476e-b906-2f0b2b6d0d2f)
 
-🚀 Installation
+**🚀 Installation**
 bash
 git clone https://github.com/joebrayanforus/qr-code-generator-.git
 cd qr-code-generator-
@@ -37,7 +37,7 @@ Dann öffne http://127.0.0.1:5000 im Browser.
 final version:
 https://qr-code-generator-m3dc.onrender.com
 
-📦 Abhängigkeiten
+**📦 Abhängigkeiten**
 Flask
 
 qrcode
@@ -46,7 +46,7 @@ Pillow
 
 Gunicorn (für Deployment)
 
-📁 Projektstruktur
+**📁 Projektstruktur**
 Code
 qr-code-generator/
 ├── app.py
@@ -57,5 +57,5 @@ qr-code-generator/
 │   ├── style.css
 │   ├── logo.png
 │   └── qr_codes/
-📣 Lizenz & Autor
+**📣 Lizenz & Autor**
 Dieses Projekt wurde erstellt von Joebrayan Forus im Jahr 2025. Du darfst es gerne verwenden, erweitern oder verbessern – mit Namensnennung.

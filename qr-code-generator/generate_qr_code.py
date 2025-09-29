@@ -1,25 +1,34 @@
 import qrcode
+from PIL import Image
 
-def generate_qr_code(data, filename):
-    # Crée un objet QRCode avec des paramètres personnalisés
+def create_qr_code(data, color="black", bgcolor="white", size=10, with_logo=False):
+    if not data:
+        data = "https://example.com"
+
     qr = qrcode.QRCode(
-        version=1,  # Taille du QR code (1 à 40)
-        error_correction=qrcode.constants.ERROR_CORRECT_L,  # Niveau de correction d'erreur
-        box_size=10,  # Taille de chaque carré
-        border=4,  # Bordure autour du QR code
+        version=1,
+        error_correction=qrcode.constants.ERROR_CORRECT_H,
+        box_size=size,
+        border=4,
     )
-    
-    # Ajoute les données à encoder
     qr.add_data(data)
     qr.make(fit=True)
 
-    # Génère l'image du QR code
-    img = qr.make_image(fill_color="black", back_color="white")
-    
-    # Sauvegarde l'image dans un fichier
-    img.save(filename)
-    print(f"✅ QR code généré et enregistré sous : {filename}")
+    img = qr.make_image(fill_color=color, back_color=bgcolor).convert("RGB")
 
-# Exemple d'utilisation
+    if with_logo:
+        try:
+            logo = Image.open("logo.png.jpeg")
+            basewidth = img.size[0] // 4
+            wpercent = (basewidth / float(logo.size[0]))
+            hsize = int((float(logo.size[1]) * float(wpercent)))
+            logo = logo.resize((basewidth, hsize), Image.LANCZOS)
 
-generate_qr_code("https://www.instagram.com", "example.png")
+            # Logo ins Zentrum einfügen
+            pos = ((img.size[0] - logo.size[0]) // 2,
+                   (img.size[1] - logo.size[1]) // 2)
+            img.paste(logo, pos, mask=logo if logo.mode == "RGBA" else None)
+        except Exception as e:
+            print("⚠️ Logo konnte nicht eingefügt werden:", e)
+
+    return img

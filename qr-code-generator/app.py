@@ -6,7 +6,7 @@ from generate_qr_code import create_qr_code
 
 app = Flask(__name__)
 
-# Speicher für erzeugte QR-Codes (im RAM)
+# Speicher für QR-Codes (Liste aus {img, text})
 generated_qrs = []
 
 @app.route("/", methods=["GET", "POST"])
@@ -19,18 +19,18 @@ def index():
         size = int(request.form.get("size", 10))
         with_logo = request.form.get("with_logo") == "on"
 
-        # QR-Code erstellen
+        # QR-Code generieren
         qr_img = create_qr_code(data, color, bgcolor, size, with_logo)
 
-        # In Base64 umwandeln, damit es im HTML angezeigt werden kann
+        # In Base64 umwandeln
         img_bytes = io.BytesIO()
         qr_img.save(img_bytes, format="PNG")
         img_bytes.seek(0)
         encoded_img = base64.b64encode(img_bytes.read()).decode('utf-8')
         img_data = f"data:image/png;base64,{encoded_img}"
 
-        # Neuen QR-Code zur Galerie hinzufügen
-        generated_qrs.insert(0, img_data)  # letzter QR ganz vorne
+        # Neuen QR speichern
+        generated_qrs.insert(0, {"img": img_data, "text": data})
 
     return render_template("index.html", generated_qrs=generated_qrs)
 

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>QR-Code Generator Deluxe ✨</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <style>
         body {
             background: linear-gradient(120deg, #f6f9ff, #e6eeff);
@@ -15,7 +16,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
         .card {
-            border: none;
             border-radius: 20px;
             box-shadow: 0 8px 20px rgba(0,0,0,0.1);
             background: white;
@@ -36,10 +36,6 @@
         .video-container:hover {
             transform: scale(1.02);
         }
-        .video-container iframe {
-            width: 100%;
-            height: 240px;
-        }
         .qr-gallery {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -49,6 +45,8 @@
         .qr-item {
             text-align: center;
             animation: popIn 0.7s ease both;
+            transition: all 0.3s ease;
+            position: relative;
         }
         @keyframes popIn {
             from { opacity: 0; transform: scale(0.8) translateY(30px); }
@@ -70,11 +68,19 @@
             font-weight: 500;
             color: #333;
             word-break: break-word;
-            opacity: 0.9;
-            transition: color 0.3s;
         }
-        .qr-text:hover {
-            color: #0d6efd;
+        .btn-action {
+            margin: 4px;
+            transition: all 0.3s ease;
+        }
+        .btn-action:hover {
+            transform: scale(1.1);
+        }
+        .fade-out {
+            animation: fadeOut 0.5s forwards ease;
+        }
+        @keyframes fadeOut {
+            to { opacity: 0; transform: scale(0.8); }
         }
     </style>
 </head>
@@ -82,10 +88,9 @@
 
 <div class="container py-5">
     <div class="card shadow-lg p-4">
-        <h2 class="text-center mb-3 fw-bold">🚀 Beeindruckender QR-Code Generator</h2>
-        <p class="text-center text-muted">Erstelle stilvolle QR-Codes mit Animationen, Video & Galerie</p>
+        <h2 class="text-center mb-3 fw-bold">🚀 QR-Code Generator mit Download & Animation</h2>
+        <p class="text-center text-muted">Erstelle, lade herunter oder lösche deine QR-Codes mit Stil!</p>
 
-        <!-- 🎥 Video -->
         <div class="video-container mb-4">
             <iframe 
                 src="https://www.youtube.com/embed/dQw4w9WgXcQ"
@@ -134,9 +139,11 @@
         <h5 class="text-center mb-3">🖼️ Deine erstellten QR-Codes</h5>
         <div class="qr-gallery">
             {% for qr in generated_qrs %}
-                <div class="qr-item">
+                <div class="qr-item" id="qr-{{ qr.id }}">
                     <img src="{{ qr.img }}" alt="QR Code">
                     <div class="qr-text">{{ qr.text }}</div>
+                    <a href="/download/{{ qr.id }}" class="btn btn-success btn-sm btn-action">⬇️ Download</a>
+                    <button class="btn btn-danger btn-sm btn-action delete-btn" data-id="{{ qr.id }}">🗑️ Löschen</button>
                 </div>
             {% endfor %}
         </div>
@@ -146,12 +153,24 @@
     </div>
 </div>
 
+<script>
+$(document).on("click", ".delete-btn", function() {
+    const id = $(this).data("id");
+    const item = $("#qr-" + id);
+    item.addClass("fade-out");
+
+    setTimeout(() => {
+        $.post("/delete/" + id, {}, function(resp) {
+            if (resp.success) {
+                item.remove();
+            }
+        });
+    }, 400);
+});
+</script>
+
 </body>
 </html>
-
-
-
-
 
 
 

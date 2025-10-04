@@ -24,7 +24,6 @@ def create_qr_code(data, color="black", bgcolor="white", size=10, with_logo=Fals
             hsize = int((float(logo.size[1]) * float(wpercent)))
             logo = logo.resize((basewidth, hsize), Image.LANCZOS)
 
-            # Logo ins Zentrum einfügen
             pos = ((img.size[0] - logo.size[0]) // 2,
                    (img.size[1] - logo.size[1]) // 2)
             img.paste(logo, pos, mask=logo if logo.mode == "RGBA" else None)
@@ -32,3 +31,4 @@ def create_qr_code(data, color="black", bgcolor="white", size=10, with_logo=Fals
             print("⚠️ Logo konnte nicht eingefügt werden:", e)
 
     return img
+

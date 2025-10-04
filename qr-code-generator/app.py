@@ -14,10 +14,8 @@ def index():
         size = int(request.form.get("size", 10))
         with_logo = request.form.get("with_logo") == "on"
 
-        # QR-Code erzeugen
         qr_img = create_qr_code(data, color, bgcolor, size, with_logo)
 
-        # In Memory speichern
         img_bytes = io.BytesIO()
         qr_img.save(img_bytes, format="PNG")
         img_bytes.seek(0)
@@ -34,4 +32,5 @@ def index():
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
+
 

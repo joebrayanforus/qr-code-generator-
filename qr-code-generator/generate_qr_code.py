@@ -32,3 +32,5 @@ def create_qr_code(data, color="black", bgcolor="white", size=10, with_logo=Fals
 
     return img
 
+
+

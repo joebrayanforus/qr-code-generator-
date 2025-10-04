@@ -2,15 +2,39 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>QR-Code Generator</title>
+    <title>QR-Code Generator Deluxe ✨</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        body {
+            background: linear-gradient(120deg, #f6f9ff, #e6eeff);
+            min-height: 100vh;
+            animation: fadeIn 1s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .card {
+            border: none;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            background: white;
+            animation: slideUp 1s ease;
+        }
+        @keyframes slideUp {
+            from { transform: translateY(40px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
         .video-container {
             width: 60%;
             margin: 0 auto 1.5rem;
-            border-radius: 10px;
+            border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease;
+        }
+        .video-container:hover {
+            transform: scale(1.02);
         }
         .video-container iframe {
             width: 100%;
@@ -18,27 +42,53 @@
         }
         .qr-gallery {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 1rem;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
             margin-top: 2rem;
         }
-        .qr-gallery img {
+        .qr-item {
+            text-align: center;
+            animation: popIn 0.7s ease both;
+        }
+        @keyframes popIn {
+            from { opacity: 0; transform: scale(0.8) translateY(30px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .qr-item img {
             width: 100%;
-            border-radius: 10px;
-            box-shadow: 0 0 6px rgba(0,0,0,0.2);
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .qr-item img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        .qr-text {
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #333;
+            word-break: break-word;
+            opacity: 0.9;
+            transition: color 0.3s;
+        }
+        .qr-text:hover {
+            color: #0d6efd;
         }
     </style>
 </head>
-<body class="bg-light">
+<body>
 
-<div class="container py-4">
-    <div class="card shadow p-4">
-        <h2 class="text-center mb-3">🎬 QR-Code Generator mit Video & Galerie</h2>
+<div class="container py-5">
+    <div class="card shadow-lg p-4">
+        <h2 class="text-center mb-3 fw-bold">🚀 Beeindruckender QR-Code Generator</h2>
+        <p class="text-center text-muted">Erstelle stilvolle QR-Codes mit Animationen, Video & Galerie</p>
 
-        <!-- 🎥 Kleineres eingebettetes YouTube-Video -->
-        <div class="video-container">
+        <!-- 🎥 Video -->
+        <div class="video-container mb-4">
             <iframe 
-                src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+                src="https://www.youtube.com/embed/dQw4w9WgXcQ"
                 title="QR-Code Video"
                 frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -49,8 +99,8 @@
         <!-- Formular -->
         <form method="POST" class="mb-4">
             <div class="mb-3">
-                <label class="form-label">Text / URL</label>
-                <input type="text" class="form-control" name="data" placeholder="Gib einen Text oder Link ein" required>
+                <label class="form-label fw-semibold">Text oder URL</label>
+                <input type="text" class="form-control form-control-lg" name="data" placeholder="z.B. https://example.com" required>
             </div>
             
             <div class="row">
@@ -76,27 +126,30 @@
                 </label>
             </div>
 
-            <button type="submit" class="btn btn-primary w-100">QR-Code generieren</button>
+            <button type="submit" class="btn btn-primary btn-lg w-100 shadow">✨ QR-Code generieren</button>
         </form>
 
         <!-- Galerie -->
         {% if generated_qrs %}
-        <h5 class="text-center mb-3">🖼️ Erzeugte QR-Codes</h5>
+        <h5 class="text-center mb-3">🖼️ Deine erstellten QR-Codes</h5>
         <div class="qr-gallery">
             {% for qr in generated_qrs %}
-                <div>
-                    <img src="{{ qr }}" alt="QR Code">
+                <div class="qr-item">
+                    <img src="{{ qr.img }}" alt="QR Code">
+                    <div class="qr-text">{{ qr.text }}</div>
                 </div>
             {% endfor %}
         </div>
         {% else %}
-        <p class="text-center text-muted">Noch keine QR-Codes erzeugt.</p>
+        <p class="text-center text-muted">Noch keine QR-Codes erstellt 😇</p>
         {% endif %}
     </div>
 </div>
 
 </body>
 </html>
+
+
 
 
 

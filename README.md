@@ -92,5 +92,5 @@ Flask
 qrcode  
 Pillow  
 Gunicorn
-📣 Autor & Lizenz
+📣 Autor & Lizenz.
 Erstellt von Joebrayan Forus, Informatikstudent an der Universität Siegen. Lizenz: MIT – frei zur Nutzung und Erweiterung mit Namensnennung.

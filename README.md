@@ -1,95 +1,141 @@
-# 📱 QR-Code-Generator – Webanwendung mit Flask
+⭐ Étape 1 — Projekt anlegen
+1. Vivado → Create Project
+Name: mux8_project
 
----
-![Screenshot der Anwendung](https://github.com/user-attachments/assets/ffd64533-a85a-476e-b906-2f0b2b6d0d2f)
+Project Type: RTL Project
 
-## 🧠 **Projektübersicht**
+Add Sources: später
 
-**Projekttitel**: QR-Code-Generator  
-**Technologien**: Python · Flask · qrcode · HTML/CSS · Render
+Add Constraints: später
 
-Dieses Projekt demonstriert die Entwicklung einer nativen Webanwendung zur Erstellung von QR-Codes. Ziel ist es, die Fähigkeit zur Umsetzung von Webprojekten mit Python und Flask zu zeigen – inklusive Frontend-Design, Serverlogik, Deployment und Fehlerbehandlung.
+Board: Blackboard (oder XC7A35T‑1CPG236C)
 
----
+⭐ Étape 2 — Verilog‑Quellen hinzufügen
+Du brauchst zwei Dateien:
 
-## 🎯 **Projektziele**
+📄 Datei 1 — mux_8_1.v (das eigentliche MUX‑Modul)
+verilog
+module mux_8_1 (
+    input  [7:0] data,
+    input  [2:0] sel,
+    output       Y
+);
 
-1. Entwicklung einer benutzerfreundlichen Weboberfläche zur QR-Code-Erstellung  
-2. Integration von Flask zur Verwaltung von Routen und Formularen  
-3. Nutzung der `qrcode`-Bibliothek zur Generierung von QR-Codes  
-4. Bereitstellung von Funktionen zum Download und Löschen von QR-Codes  
-5. Deployment der Anwendung auf Render mit stabiler Konfiguration
+    assign Y = data[sel];
 
----
+endmodule
+📄 Datei 2 — top_mux8.v (Top‑Level für das Board)
+⚠ Wichtig: Ports müssen EXAKT zu deinem XDC passen.
 
-## 🛠️ **Technologien & Tools**
+verilog
+module top_mux8 (
+    input  [7:0] sw,     // slide switches
+    input  [2:0] btn,    // push buttons
+    output       led0    // green LED
+);
 
-| Technologie     | Zweck                                 |
-|----------------|----------------------------------------|
-| Python & Flask | Backend-Logik und Routing              |
-| qrcode         | QR-Code-Erstellung                     |
-| Pillow         | Bildverarbeitung                       |
-| HTML/CSS       | Benutzeroberfläche und Design          |
-| Gunicorn       | WSGI-Server für Deployment              |
-| Render         | Hosting der Anwendung                  |
+    wire y;
 
----
+    mux_8_1 dut (
+        .data(sw),
+        .sel(btn),
+        .Y(y)
+    );
 
-## 📁 **Projektstruktur**
+    assign led0 = y;
 
-```bash
-qr-code-generator/
-├── app.py
-├── requirements.txt
-├── templates/
-│   └── index.html
-├── static/
-│   ├── style.css
-│   ├── logo.png
-│   └── qr_codes/
+endmodule
+⭐ Étape 3 — XDC anpassen
+Du hast ein großes Master‑XDC.
+Für dieses Projekt brauchst du nur 1 Zeile ändern:
 
-🚀 Installation & Ausführung
-bash
-git clone https://github.com/joebrayanforus/qr-code-generator-.git
+Ändere:
+Code
+[get_ports { led[0] }]
+Zu:
+Code
+[get_ports { led0 }]
+Alles andere bleibt unverändert.
 
-cd qr-code-generator-
+⭐ Étape 4 — Simulation hinzufügen
+Du brauchst eine Simulation Source:
 
-pip install -r requirements.txt
+📄 Datei 3 — mux_8_1_tb.v (Testbench)
+verilog
+`timescale 1ns / 1ps
 
-python app.py
-Dann öffne http://127.0.0.1:5000 im Browser.
+module mux_8_1_tb;
 
-🔗 Live-Version: qr-code-generator-m3dc.onrender.com
+    reg  [7:0] data;
+    reg  [2:0] sel;
+    wire       Y;
 
-📸 Screenshot
-html
-![Screenshot der Anwendung](static/screenshot.png)
+    mux_8_1 dut (
+        .data(data),
+        .sel(sel),
+        .Y(Y)
+    );
 
-(Stelle sicher, dass screenshot.png im Ordner static/ liegt.)
+    initial begin
+        data = 8'b1010_1101;
 
-🔄 Funktionen im Detail
-🔤 Texteingabe oder URL-Eingabe über Webformular
+        sel = 3'b000; #10;
+        sel = 3'b001; #10;
+        sel = 3'b010; #10;
+        sel = 3'b011; #10;
+        sel = 3'b100; #10;
+        sel = 3'b101; #10;
+        sel = 3'b110; #10;
+        sel = 3'b111; #10;
 
-🖼️ Sofortige QR-Code-Erstellung mit Vorschau
+        $stop;
+    end
 
-📥 Download als PNG-Datei
+endmodule
+Simulation starten:
+Rechtsklick → Set as Top
 
-🗑️ Löschen generierter QR-Codes
+Run Simulation → Behavioral Simulation
 
-🎨 Modernes Design mit CSS-Animationen und Google Fonts
+⭐ Étape 5 — Synthesis & Implementation
+Run Synthesis
 
-📱 Responsive für Desktop und Mobile
+Run Implementation
 
-🧩 Technische Herausforderungen & Lösungen
-Problem	Lösung
-UnicodeDecodeError beim Deployment	Umstellung auf DSN-Verbindung mit UTF-8-Encoding
-Flask-App startet nicht lokal	Einrichtung eines sauberen venv, Anpassung der PowerShell-Richtlinien
-404-Fehler auf Render	Korrektur der render.yaml und Konfiguration des Startbefehls mit Gunicorn
-QR-Code wird nicht angezeigt	Pfadkorrektur und dynamische Dateibenennung im static/qr_codes-Ordner
-📦 Abhängigkeiten
-txt
-Flask  
-qrcode  
+Generate Bitstream
+
+Open Hardware Manager
+
+Program Device
+
+⭐ Étape 6 — Test auf dem Blackboard
+1. Setze Switches:
+z. B.:
+
+sw[0] = 1
+
+sw[7] = 1
+
+alle anderen = 0
+
+2. Drücke Buttons (Select):
+btn = 000 → LED zeigt sw[0]
+
+btn = 001 → LED zeigt sw[1]
+
+…
+
+btn = 111 → LED zeigt sw[7]
+
+Wenn LED nur bei 0 und 7 leuchtet → Mux funktioniert perfekt.
+
+⭐ Alles zusammengefasst — deine 3 Dateien
+✔ mux_8_1.v
+✔ top_mux8.v
+✔ mux_8_1_tb.v
+Damit ist Étape 1 vollständig abgeschlossen.
+
+Wenn du willst, machen wir jetzt Étape 2 (hierarchischer MUX mit 4:1 + 2:1), oder wir gehen direkt zu Part 2 der Real‑Digital‑Aufgabe
 Pillow  
 Gunicorn
 📣 Autor & Lizenz.

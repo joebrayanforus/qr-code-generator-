@@ -1,18 +1,3 @@
-⭐ Étape 1 — Projekt anlegen
-1. Vivado → Create Project
-Name: mux8_project
-
-Project Type: RTL Project
-
-Add Sources: später
-
-Add Constraints: später
-
-Board: Blackboard (oder XC7A35T‑1CPG236C)
-
-⭐ Étape 2 — Verilog‑Quellen hinzufügen
-Du brauchst zwei Dateien:
-
 📄 Datei 1 — mux_8_1.v (das eigentliche MUX‑Modul)
 verilog
 module mux_8_1 (
@@ -92,51 +77,4 @@ module mux_8_1_tb;
     end
 
 endmodule
-Simulation starten:
-Rechtsklick → Set as Top
-
-Run Simulation → Behavioral Simulation
-
-⭐ Étape 5 — Synthesis & Implementation
-Run Synthesis
-
-Run Implementation
-
-Generate Bitstream
-
-Open Hardware Manager
-
-Program Device
-
-⭐ Étape 6 — Test auf dem Blackboard
-1. Setze Switches:
-z. B.:
-
-sw[0] = 1
-
-sw[7] = 1
-
-alle anderen = 0
-
-2. Drücke Buttons (Select):
-btn = 000 → LED zeigt sw[0]
-
-btn = 001 → LED zeigt sw[1]
-
-…
-
-btn = 111 → LED zeigt sw[7]
-
-Wenn LED nur bei 0 und 7 leuchtet → Mux funktioniert perfekt.
-
-⭐ Alles zusammengefasst — deine 3 Dateien
-✔ mux_8_1.v
-✔ top_mux8.v
-✔ mux_8_1_tb.v
-Damit ist Étape 1 vollständig abgeschlossen.
-
-Wenn du willst, machen wir jetzt Étape 2 (hierarchischer MUX mit 4:1 + 2:1), oder wir gehen direkt zu Part 2 der Real‑Digital‑Aufgabe
-Pillow  
-Gunicorn
-📣 Autor & Lizenz.
 Erstellt von Joebrayan Forus, Informatikstudent an der Universität Siegen. Lizenz: MIT – frei zur Nutzung und Erweiterung mit Namensnennung.
